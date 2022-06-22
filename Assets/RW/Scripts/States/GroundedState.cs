@@ -43,6 +43,39 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
+        
+        public override void Enter()
+        {
+            base.Enter();
 
+            horizontalInput = verticalInput = 0f;
+        }
+
+        public override void HandleInput()
+        {
+            base.HandleInput();
+
+            verticalInput = Input.GetAxis("Vertical");
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            character.Move(verticalInput * speed, horizontalInput * rotationSpeed);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            character.ResetMoveParams();
+        }
     }
 }

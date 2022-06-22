@@ -37,8 +37,13 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
         #region Variables
 
+        public StateMachine movementSM;
+        public StandingState standing;
+        public DuckingState ducking;
+        public JumpingState jumping;
 
-#pragma warning disable 0649
+        #pragma warning disable 0649
+
         [SerializeField]
         private Transform handTransform;
         [SerializeField]
@@ -55,7 +60,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private Animator anim;
         [SerializeField]
         private ParticleSystem shockWave;
-#pragma warning restore 0649
+
+        #pragma warning restore 0649
+
         [SerializeField]
         private float meleeRestThreshold = 10f;
         [SerializeField]
@@ -65,10 +72,12 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         private GameObject currentWeapon;
         private Quaternion currentRotation;
+
         private int horizonalMoveParam = Animator.StringToHash("H_Speed");
         private int verticalMoveParam = Animator.StringToHash("V_Speed");
         private int shootParam = Animator.StringToHash("Shoot");
         private int hardLanding = Animator.StringToHash("HardLand");
+
         #endregion
 
         #region Properties
@@ -212,6 +221,28 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         #endregion
 
         #region MonoBehaviour Callbacks
+
+        private void Start()
+        {
+            movementSM = new StateMachine();
+
+            standing = new StandingState (this , movementSM);
+            ducking = new DuckingState(this, movementSM);
+            jumping = new JumpingState(this, movementSM);
+
+            movementSM.Initialize(standing);
+        }
+
+        private void Update()
+        {
+            movementSM.CurrentState.HandleInput();
+            movementSM.CurrentState.LogicUpdate();
+        }
+
+        private void FixedUpdate()
+        {
+            movementSM.CurrentState.PhysicsUpdate();
+        }
 
 
         #endregion
