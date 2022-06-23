@@ -6,25 +6,23 @@ using Pathfinding;
 public class NPC : MonoBehaviour
 {
     public GameObject Target;
-    
+
     Pathfinder pf;
     NodeManager nm;
 
     List<Vector3> path;
-    int current;
+    int current = 0;
 
     void Start()
     {
         nm = GameObject.Find("Grid").GetComponent<NodeManager>();
         pf = new Pathfinder(nm);
 
-        current = 0;
+        StartCoroutine(Path());
     }
 
     void Update()
     {
-        path = pf.GetPath(transform.position, Target.transform.position);
-
         Move();
     }
 
@@ -42,6 +40,17 @@ public class NPC : MonoBehaviour
                 path = null;
                 current = 0;
             }
+        }
+    }
+
+    IEnumerator Path()
+    {
+        for (;;)//int a = 0; a < 1; a++)
+        {
+            yield return new WaitForSeconds(.5f);
+            
+            current = 0;
+            path = pf.GetPath(transform.position, Target.transform.position);
         }
     }
 }

@@ -244,7 +244,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             movementSM.CurrentState.PhysicsUpdate();
         }
 
-
         #endregion
     }
 }

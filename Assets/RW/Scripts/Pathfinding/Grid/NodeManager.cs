@@ -23,6 +23,12 @@ namespace Pathfinding
                     grid.Get(x, y).SetPosition(x, y);
                 }
             }
+
+            foreach (GameObject obst in GameObject.FindGameObjectsWithTag("Obstacle"))
+            {
+                Renderer r = obst.GetComponent<Renderer>();
+                SetObstacle(r.bounds.center, r.bounds.size.x, r.bounds.size.z);
+            }
         }
 
         public Node GetNearestNodeToPosition(Vector3 pos)
@@ -98,7 +104,7 @@ namespace Pathfinding
             }
         }
 
-        public void SetObstacles(Vector3 obstPos, float obstWidth, float obstHeight)
+        void SetObstacle(Vector3 obstPos, float obstWidth, float obstHeight)
         {
             for (int x = 0; x < Width - 1; x++)
             {
@@ -113,7 +119,6 @@ namespace Pathfinding
                         pos.z <= (obstPos.z + Mathf.Ceil(obstHeight / 2)) &&
                         pos.z >= (obstPos.z - Mathf.Ceil(obstHeight / 2))
                     ) n.Obstacle = true;
-                    else n.Obstacle = false;
                 }
             }
         }
