@@ -5,6 +5,8 @@ using Pathfinding;
 
 public class NPC : MonoBehaviour
 {
+    public GameObject Target;
+    
     Pathfinder pf;
     NodeManager nm;
 
@@ -21,19 +23,9 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        path = pf.GetPath(transform.position, Target.transform.position);
 
-            if (Physics.Raycast(ray, out hit, 100f))
-            {
-                if (hit.transform.gameObject.name == "Ground")
-                {
-                    path = pf.GetPath(transform.position, hit.transform.position);
-                }
-            }
-        }
+        Move();
     }
 
     void Move()
@@ -42,9 +34,8 @@ public class NPC : MonoBehaviour
         {
             if (current < path.Count)
             {
-                transform.Translate(path[current]);
-                if (Vector3.Distance(transform.position, path[current]) <= 0)
-                current++;
+                transform.position = Vector3.MoveTowards(transform.position, path[current], 3 * Time.deltaTime);
+                if (Vector3.Distance(transform.position, path[current]) <= 0.01f) current++;
             }
             else
             {

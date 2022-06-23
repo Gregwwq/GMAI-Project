@@ -86,5 +86,36 @@ namespace Pathfinding
                 transform.position.z + (node.GridY * CellSize)
             );
         }
+
+        public void ResetNodes()
+        {
+            for (int x = 0; x < Width - 1; x++)
+            {
+                for (int y = 0; y < Height - 1; y++)
+                {
+                    grid.Get(x, y).ResetValues();
+                }
+            }
+        }
+
+        public void SetObstacles(Vector3 obstPos, float obstWidth, float obstHeight)
+        {
+            for (int x = 0; x < Width - 1; x++)
+            {
+                for (int y = 0; y < Height - 1; y++)
+                {
+                    Node n = grid.Get(x, y);
+                    Vector3 pos = GetNodeWorldPosition(n);
+
+                    if (
+                        pos.x <= (obstPos.x + Mathf.Ceil(obstWidth / 2)) &&
+                        pos.x >= (obstPos.x - Mathf.Ceil(obstWidth / 2)) &&
+                        pos.z <= (obstPos.z + Mathf.Ceil(obstHeight / 2)) &&
+                        pos.z >= (obstPos.z - Mathf.Ceil(obstHeight / 2))
+                    ) n.Obstacle = true;
+                    else n.Obstacle = false;
+                }
+            }
+        }
     }
 }

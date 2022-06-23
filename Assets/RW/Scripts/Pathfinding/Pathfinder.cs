@@ -35,11 +35,13 @@ namespace Pathfinding
 
         List<Node> FindPath(Node start, Node end)
         {
-            start.G = 0;
-            start.H = CalculateMoveCost(start, end);
-
             open = new List<Node>() { start };
             closed = new List<Node>();
+
+            nm.ResetNodes();
+
+            start.G = 0;
+            start.H = CalculateMoveCost(start, end);
 
             while (open.Count > 0)
             {
@@ -54,6 +56,12 @@ namespace Pathfinding
                 {
                     if (closed.Contains(node)) continue;
 
+                    if (node.Obstacle)
+                    {
+                        closed.Add(node);
+                        continue;
+                    }
+
                     int gCost = current.G + CalculateMoveCost(current, node);
                     if (gCost < node.G)
                     {
@@ -66,7 +74,7 @@ namespace Pathfinding
                 }
             }
 
-            return null;
+            return new List<Node>();
         }
 
         int CalculateMoveCost(Node a, Node b)
@@ -82,6 +90,7 @@ namespace Pathfinding
         {
             int lowestF = int.MaxValue;
             Node n = null;
+
             foreach(Node node in open)
             {
                 if (node.F < lowestF)
@@ -90,6 +99,7 @@ namespace Pathfinding
                     n = node;
                 }
             }
+            
             return n;
         }
 
