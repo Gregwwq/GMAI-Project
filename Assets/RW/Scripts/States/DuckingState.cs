@@ -53,6 +53,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             character.ColliderSize = character.CrouchColliderHeight;
             
             belowCeiling = false;
+
+            DisplayOnUI(UIManager.Alignment.Left);
         }
 
         public override void HandleInput()

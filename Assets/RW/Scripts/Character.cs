@@ -41,6 +41,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public StandingState standing;
         public DuckingState ducking;
         public JumpingState jumping;
+        public MeleeDrawnState meleeDrawn;
+        public AttackingState swingMelee;
+        
 
         #pragma warning disable 0649
 
@@ -229,6 +232,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             standing = new StandingState (this , movementSM);
             ducking = new DuckingState(this, movementSM);
             jumping = new JumpingState(this, movementSM);
+            meleeDrawn = new MeleeDrawnState(this, movementSM);
+            swingMelee = new AttackingState(this, movementSM);
 
             movementSM.Initialize(standing);
         }

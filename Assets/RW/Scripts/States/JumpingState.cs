@@ -32,7 +32,7 @@ using UnityEngine;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
-    public class JumpingState : State
+    public class JumpingState : State 
     {
         private bool grounded;
         private int jumpParam = Animator.StringToHash("Jump");
@@ -49,6 +49,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             SoundManager.Instance.PlaySound(SoundManager.Instance.jumpSounds);
             
             grounded = false;
+
+            DisplayOnUI(UIManager.Alignment.Left);
 
             Jump();
         }

@@ -34,8 +34,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 {
     public class StandingState : GroundedState
     {
+        int drawMeleeParam = Animator.StringToHash("DrawMelee");
+        
         private bool jump;
         private bool crouch;
+        bool drawMelee;
 
         public StandingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -50,6 +53,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             
             crouch = false;
             jump = false;
+
+            DisplayOnUI(UIManager.Alignment.Left);
         }
 
         public override void HandleInput()
@@ -58,6 +63,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             crouch = Input.GetButtonDown("Fire3");
             jump = Input.GetButtonDown("Jump");
+
+            if (stateMachine.CurrentState.GetType() == typeof(StandingState))
+            {
+                drawMelee = Input.GetKeyDown(KeyCode.C);
+            }
         }
 
         public override void LogicUpdate()
@@ -67,6 +77,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             if (crouch)
             {
                 stateMachine.ChangeState(character.ducking);
+            }
+            else if (drawMelee)
+            {
+                character.TriggerAnimation(drawMeleeParam);
+                stateMachine.ChangeState(character.meleeDrawn);
             }
             else if (jump)
             {
