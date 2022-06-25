@@ -1,27 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 namespace NPCStateMachine
 {
-    public class IdleState : NPCState<string>
+    public class AttackState : InteractableState
     {
-        const string name = "Idle";
+        const string name = "Attack";
 
-        public IdleState(NPCSM<string> _sm) : base(_sm, name)
+        public AttackState(NPCSM<string> _sm, NPC npc) : base(_sm, name, npc)
         {
-
+            
         }
 
         public override void Enter()
         {
-
+            npc.anim.SetFloat("Speed", 0);
+            npc.anim.SetTrigger(Animator.StringToHash("Attack"));
         }
 
         public override void Execute()
         {
-
+            
         }
 
         public override void Exit()

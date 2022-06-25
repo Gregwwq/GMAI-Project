@@ -6,8 +6,8 @@ namespace NPCStateMachine
 {
     public class NPCSM<T>
     {
+        public NPCState<T> currentState { get; private set; }
         Dictionary<T, NPCState<T>> states = new Dictionary<T, NPCState<T>>();
-        NPCState<T> currentState = null;
 
         public NPCSM()
         {

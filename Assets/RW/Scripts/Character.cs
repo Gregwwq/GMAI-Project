@@ -43,7 +43,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public JumpingState jumping;
         public MeleeDrawnState meleeDrawn;
         public AttackingState swingMelee;
-        
+
+        public bool Crouching = false;       
 
         #pragma warning disable 0649
 

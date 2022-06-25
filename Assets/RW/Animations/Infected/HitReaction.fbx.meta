@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 3efe326dbf1ea634b8c7be40e41d9922
+guid: 1ec09306f32e3fc4f83c2fd91e89144a
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: GetUp
+    second: HitReaction
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: GetUp
+      name: HitReaction
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -45,6 +45,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             base.Enter();
 
+            character.Crouching = true;
+
             character.SetAnimationBool(character.crouchParam, true);
             
             speed = character.CrouchSpeed;
@@ -87,6 +89,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             character.SetAnimationBool(character.crouchParam, false);
             character.ColliderSize = character.NormalColliderHeight;
+
+            character.Crouching = false;
         }
     }
 }
