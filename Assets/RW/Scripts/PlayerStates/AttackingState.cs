@@ -22,6 +22,17 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             elap = 0f;
             
             DisplayOnUI(UIManager.Alignment.Left);
+
+            GameObject infected = GameObject.Find("Infected");
+            if (Vector3.Distance(
+                character.transform.position,
+                infected.transform.position
+            ) < 1.5f)
+            {
+                NPC npc = infected.GetComponent<NPC>();
+                if (npc.FallDown) npc.Health--;
+                else npc.GetHit = true;
+            }
         }
 
         public override void HandleInput()

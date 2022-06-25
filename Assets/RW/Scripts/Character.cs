@@ -43,10 +43,15 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public JumpingState jumping;
         public MeleeDrawnState meleeDrawn;
         public AttackingState swingMelee;
+        public PlaceFoodState placeFood;
+        public RolLState roll;
 
-        public bool Crouching = false;       
+        public bool Crouching = false;
+        public bool Rolling = false;  
 
         #pragma warning disable 0649
+
+        public GameObject FoodPrefab;
 
         [SerializeField]
         private Transform handTransform;
@@ -111,7 +116,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 GetComponent<CapsuleCollider>().height = value;
                 Vector3 center = GetComponent<CapsuleCollider>().center;
-                center.y = value / 2f;
+                if (Crouching) center.y = value / 2f;
+                else if (Rolling) center.y = 2f;
+                else center.y = 1.5f;
                 GetComponent<CapsuleCollider>().center = center;
             }
         }
@@ -211,6 +218,13 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             hitBox.enabled = false;
         }
 
+        public void SpawnFood()
+        {
+            Vector3 pos = new Vector3(transform.position.x, 0.3f, transform.position.z);
+            pos += transform.forward;
+            Instantiate(FoodPrefab, pos, Quaternion.identity);
+        }
+
         private void ParentCurrentWeapon(Transform parent)
         {
             if (currentWeapon.transform.parent == parent)
@@ -222,6 +236,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             currentWeapon.transform.localPosition = Vector3.zero;
             currentWeapon.transform.localRotation = Quaternion.identity;
         }
+        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -235,6 +250,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             jumping = new JumpingState(this, movementSM);
             meleeDrawn = new MeleeDrawnState(this, movementSM);
             swingMelee = new AttackingState(this, movementSM);
+            placeFood = new PlaceFoodState(this, movementSM);
+            roll = new RolLState(this, movementSM);
 
             movementSM.Initialize(standing);
         }

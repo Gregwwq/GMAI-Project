@@ -8,6 +8,8 @@ namespace NPCStateMachine
     {
         const string name = "Attack";
 
+        float elap;
+
         public AttackState(NPCSM<string> _sm, NPC npc) : base(_sm, name, npc)
         {
             
@@ -17,11 +19,17 @@ namespace NPCStateMachine
         {
             npc.anim.SetFloat("Speed", 0);
             npc.anim.SetTrigger(Animator.StringToHash("Attack"));
+
+            elap = 0f;
         }
 
         public override void Execute()
         {
-            
+            if (elap > 2.6f)
+            {
+                sm.SetState("Standstill");
+            }
+            else elap += Time.deltaTime;
         }
 
         public override void Exit()

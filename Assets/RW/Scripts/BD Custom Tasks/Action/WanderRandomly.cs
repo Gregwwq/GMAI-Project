@@ -6,8 +6,9 @@ using BehaviorDesigner.Runtime.Tasks;
 using Pathfinding;
 
 [TaskCategory("Movement")]
-public class WanderRandomly : Action
+public class WanderRandomlyAroundTarget : Action
 {
+    public SharedTransform target;
     public SharedFloat Speed, RotateSpeed;
     public float WanderRange;
 
@@ -74,10 +75,10 @@ public class WanderRandomly : Action
     void SetNewPosition()
     {
         // setting the boundaries of the targt location
-        float minX = transform.position.x - WanderRange;
-        float maxX = transform.position.x + WanderRange;
-        float minZ = transform.position.z - WanderRange;
-        float maxZ = transform.position.z + WanderRange;
+        float minX = target.Value.position.x - WanderRange;
+        float maxX = target.Value.position.x + WanderRange;
+        float minZ = target.Value.position.z - WanderRange;
+        float maxZ = target.Value.position.z + WanderRange;
 
         path = pf.GetPath(
             transform.position,

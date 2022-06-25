@@ -40,6 +40,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private float horizontalInput;
         private float verticalInput;
 
+        bool roll;
+
         public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
@@ -49,6 +51,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.Enter();
 
             horizontalInput = verticalInput = 0f;
+
+            roll = false;
         }
 
         public override void HandleInput()
@@ -57,11 +61,18 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
+
+            roll = Input.GetKeyDown(KeyCode.R);
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            if (roll)
+            {
+                stateMachine.ChangeState(character.roll);
+            }
         }
 
         public override void PhysicsUpdate()

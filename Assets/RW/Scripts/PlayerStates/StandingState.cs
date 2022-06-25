@@ -38,7 +38,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         
         private bool jump;
         private bool crouch;
-        bool drawMelee;
+        bool drawMelee, placeFood;
 
         public StandingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -53,6 +53,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             
             crouch = false;
             jump = false;
+            placeFood = false;
+            drawMelee = false;
 
             DisplayOnUI(UIManager.Alignment.Left);
         }
@@ -66,6 +68,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             if (stateMachine.CurrentState.GetType() == typeof(StandingState))
             {
+                placeFood = Input.GetKeyDown(KeyCode.E);
                 drawMelee = Input.GetKeyDown(KeyCode.C);
             }
         }
@@ -77,6 +80,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             if (crouch)
             {
                 stateMachine.ChangeState(character.ducking);
+            }
+            else if (placeFood)
+            {
+                stateMachine.ChangeState(character.placeFood);
             }
             else if (drawMelee)
             {

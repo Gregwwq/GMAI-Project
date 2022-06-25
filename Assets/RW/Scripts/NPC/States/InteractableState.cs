@@ -20,6 +20,9 @@ namespace NPCStateMachine
 
         public override void Execute()
         {
+            if (npc.FallDown) sm.SetState("Fall Down");
+            else if (npc.GetHit) sm.SetState("Get Hit");
+
             if (sm.currentState.GetType() != typeof(ChaseState))
             {
                 float dist = Vector3.Distance(npc.transform.position, npc.player.position);
@@ -39,9 +42,6 @@ namespace NPCStateMachine
                     }
                 }
             }
-            
-            if (npc.FallDown) sm.SetState("Fall Down");
-            else if (npc.GetHit) sm.SetState("Get Hit");
         }
 
         public override void Exit()

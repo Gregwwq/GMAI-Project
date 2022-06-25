@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Shootable
   - Obstacle
+  - Food
   layers:
   - Default
   - TransparentFX
