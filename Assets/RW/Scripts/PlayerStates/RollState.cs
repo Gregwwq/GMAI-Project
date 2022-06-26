@@ -5,7 +5,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     public class RolLState : State
     {
         int rollParam = Animator.StringToHash("Roll");
-        int sheathMeleeParam = Animator.StringToHash("SheathMelee");
 
         Vector3 targetRollLocation;
         float elap1, elap2;
@@ -20,7 +19,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             character.Rolling = true;
 
-            character.TriggerAnimation(sheathMeleeParam);
             character.TriggerAnimation(rollParam);
 
             elap1 = elap2 = 0f;

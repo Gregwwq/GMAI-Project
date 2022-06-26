@@ -18,7 +18,7 @@ public class NPC : MonoBehaviour
     public bool GetHit = false;
 
     NPCSM<string> sm;
-    NPCState<string> standStill, wander, chase, fallDown, getHit, attack;
+    NPCState<string> standStill, wander, chase, fallDown, getHit, attack, die;
 
     [HideInInspector]
     public Animator anim;
@@ -44,6 +44,7 @@ public class NPC : MonoBehaviour
         fallDown = new FallDownState(sm, this);
         getHit = new GetHitState(sm, this);
         attack = new AttackState(sm, this);
+        die = new DieState(sm, this);
 
         sm.AddState(standStill);
         sm.AddState(wander);
@@ -51,6 +52,7 @@ public class NPC : MonoBehaviour
         sm.AddState(fallDown);
         sm.AddState(getHit);
         sm.AddState(attack);
+        sm.AddState(die);
 
         sm.SetState("Standstill");
     }
@@ -58,6 +60,11 @@ public class NPC : MonoBehaviour
     private void Update()
     {
         sm.Update();
+
+        if (Health <= 0)
+        {
+            sm.SetState("Die");
+        }
     }
 
     public bool IsPlayerCrouching()

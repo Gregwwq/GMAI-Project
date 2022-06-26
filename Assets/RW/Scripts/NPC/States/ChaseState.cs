@@ -33,11 +33,6 @@ namespace NPCStateMachine
                 sm.SetState("Attack");
             }
 
-            if (dist > 10f)
-            {
-                sm.SetState("Standstill");
-            }
-
             path = npc.pf.GetPath(npc.transform.position, npc.player.position);
 
             if (path.Count > 0)

@@ -29,6 +29,7 @@
  */
 
 using UnityEngine;
+using System.Collections;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
@@ -46,8 +47,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public PlaceFoodState placeFood;
         public RolLState roll;
 
+        GameObject Infected;
+        NPC npc;
+
         public bool Crouching = false;
-        public bool Rolling = false;  
+        public bool Rolling = false;
 
         #pragma warning disable 0649
 
@@ -225,6 +229,26 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             Instantiate(FoodPrefab, pos, Quaternion.identity);
         }
 
+        public bool IsInfectedWithinMelee()
+        {
+            return (Vector3.Distance(
+                transform.position,
+                Infected.transform.position
+            ) < 2f);
+        }
+
+        public void AttackInfected()
+        {
+            if (npc.FallDown) StartCoroutine(DamageInfected());
+            else npc.GetHit = true;
+        }
+
+        IEnumerator DamageInfected()
+        {
+            yield return new WaitForSeconds(.5f);
+            npc.Health--;
+        }
+
         private void ParentCurrentWeapon(Transform parent)
         {
             if (currentWeapon.transform.parent == parent)
@@ -243,6 +267,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         private void Start()
         {
+            Infected = GameObject.Find("Infected");
+            npc = Infected.GetComponent<NPC>();
+
             movementSM = new StateMachine();
 
             standing = new StandingState (this , movementSM);

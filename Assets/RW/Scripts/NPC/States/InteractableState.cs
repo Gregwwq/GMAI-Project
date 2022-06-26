@@ -23,7 +23,10 @@ namespace NPCStateMachine
             if (npc.FallDown) sm.SetState("Fall Down");
             else if (npc.GetHit) sm.SetState("Get Hit");
 
-            if (sm.currentState.GetType() != typeof(ChaseState))
+            if (
+                sm.currentState.GetType() == typeof(StandStillState) ||
+                sm.currentState.GetType() == typeof(WanderState)
+            )
             {
                 float dist = Vector3.Distance(npc.transform.position, npc.player.position);
 

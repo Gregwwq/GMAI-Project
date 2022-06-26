@@ -10,8 +10,10 @@ namespace NPCStateMachine
 
         NPC npc;
 
+        Transform rhino;
         Vector3 fallLocation;
-        float elap;
+        float elap1, elap2;
+        bool getUpAlready;
 
         public FallDownState(NPCSM<string> _sm, NPC _npc) : base(_sm, name)
         {
@@ -20,21 +22,32 @@ namespace NPCStateMachine
 
         public override void Enter()
         {
+            rhino = GameObject.Find("Rhino").transform;
+
             npc.anim.SetFloat("Speed", 0);
             npc.anim.SetTrigger(Animator.StringToHash("FallDown"));
 
+            npc.transform.LookAt(new Vector3(rhino.position.x, npc.transform.position.y, rhino.position.z));
             fallLocation = npc.transform.position - (npc.transform.forward * 3);
 
-            elap = 0f;
+            elap1 = elap2 = 0f;
+            getUpAlready = false;
         }
 
         public override void Execute()
         {
-            if (elap > 3.4f)
+            if (elap1 > 3.8f && !getUpAlready)
+            {
+                npc.anim.SetTrigger(Animator.StringToHash("GetUp"));
+                getUpAlready = true;
+            }
+            else elap1 += Time.deltaTime;
+
+            if (elap2 > 5.4f)
             {
                 sm.SetState("Standstill");
             }
-            else elap += Time.deltaTime;
+            else elap2 += Time.deltaTime;
 
             npc.transform.position =
                 Vector3.MoveTowards(npc.transform.position, fallLocation, 8 * Time.deltaTime);
@@ -42,7 +55,7 @@ namespace NPCStateMachine
 
         public override void Exit()
         {
-            
+            npc.FallDown = false;
         }
     }
 }

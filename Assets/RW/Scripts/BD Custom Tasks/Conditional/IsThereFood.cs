@@ -5,20 +5,11 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
 [TaskCategory("Rhino")]
-public class IsInfectedWithinRange : Conditional
+public class IsThereFood : Conditional
 {
-    public float Range;
-
-    Transform infected;
-
-    public override void OnStart()
-    {
-        infected = GameObject.Find("Infected").transform;
-    }
-
     public override TaskStatus OnUpdate()
     {
-        if (Vector3.Distance(transform.position, infected.position) <= Range)
+        if (GameObject.FindGameObjectsWithTag("Food").Length > 0)
         {
             return TaskStatus.Success;
         }

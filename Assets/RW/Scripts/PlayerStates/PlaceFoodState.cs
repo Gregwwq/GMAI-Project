@@ -11,6 +11,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         }
 
         float elap1, elap2;
+        bool placed;
 
         public override void Enter()
         {
@@ -22,6 +23,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             character.ColliderSize = 2f;
 
             elap1 = elap2 = 0f;
+            placed = false;
         }
 
         public override void HandleInput()
@@ -33,9 +35,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             base.LogicUpdate();
 
-            if (elap1 > 0.6f)
+            if (elap1 > 0.6f && !placed)
             {
                 character.SpawnFood();
+                placed = true;
             }
             else elap1 += Time.deltaTime;
 

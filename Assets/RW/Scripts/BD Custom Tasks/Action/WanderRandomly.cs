@@ -13,8 +13,8 @@ public class WanderRandomlyAroundTarget : Action
     public float WanderRange;
 
     Animator anim;
-    Pathfinder pf;
     NodeManager nm;
+    Pathfinder pf;
 
     Vector3 targetLocation;
     List<Vector3> path;

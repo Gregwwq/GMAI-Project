@@ -17,6 +17,8 @@ namespace NPCStateMachine
 
         public override void Enter()
         {
+            base.Enter();
+
             npc.anim.SetFloat("Speed", 0);
             npc.anim.SetTrigger(Animator.StringToHash("Attack"));
 
@@ -25,16 +27,18 @@ namespace NPCStateMachine
 
         public override void Execute()
         {
+            base.Execute();
+
             if (elap > 2.6f)
             {
-                sm.SetState("Standstill");
+                sm.SetState("Chase");
             }
             else elap += Time.deltaTime;
         }
 
         public override void Exit()
         {
-            
+            base.Exit();
         }
     }
 }

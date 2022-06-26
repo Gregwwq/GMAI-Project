@@ -19,20 +19,15 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.Enter();
 
             character.TriggerAnimation(swingMeleeParam);
-            elap = 0f;
-            
-            DisplayOnUI(UIManager.Alignment.Left);
 
-            GameObject infected = GameObject.Find("Infected");
-            if (Vector3.Distance(
-                character.transform.position,
-                infected.transform.position
-            ) < 1.5f)
+            if (character.IsInfectedWithinMelee())
             {
-                NPC npc = infected.GetComponent<NPC>();
-                if (npc.FallDown) npc.Health--;
-                else npc.GetHit = true;
+                character.AttackInfected();
             }
+
+            elap = 0f;
+
+            DisplayOnUI(UIManager.Alignment.Left);
         }
 
         public override void HandleInput()
@@ -44,7 +39,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             base.LogicUpdate();
 
-            if (elap > (2.2 / 2))
+            if (elap > (1.5f))
             {
                 stateMachine.ChangeState(character.meleeDrawn);
             }

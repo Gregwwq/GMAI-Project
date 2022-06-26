@@ -42,6 +42,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         bool roll;
 
+        int sheathMeleeParam = Animator.StringToHash("SheathMelee");
+
         public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
@@ -69,9 +71,17 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             base.LogicUpdate();
 
-            if (roll)
+            if (stateMachine.CurrentState.GetType() != typeof(AttackingState))
             {
-                stateMachine.ChangeState(character.roll);
+                if (roll)
+                {
+                    if (stateMachine.CurrentState.GetType() == typeof(MeleeDrawnState))
+                    {
+                        Debug.Log("W");
+                        character.TriggerAnimation(sheathMeleeParam);
+                    }
+                    stateMachine.ChangeState(character.roll);
+                }
             }
         }
 

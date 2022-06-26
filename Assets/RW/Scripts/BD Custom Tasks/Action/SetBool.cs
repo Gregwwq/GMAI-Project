@@ -4,12 +4,14 @@ using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
-public class IsBool : Conditional
+public class SetBool : Action
 {
     public SharedBool Boolean;
+    public bool Intent;
 
     public override TaskStatus OnUpdate()
     {
-        return Boolean.Value ? TaskStatus.Success : TaskStatus.Failure;
+        Boolean.Value = Intent;
+        return TaskStatus.Success;
     }
 }

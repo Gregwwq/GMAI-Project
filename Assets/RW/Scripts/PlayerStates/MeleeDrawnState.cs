@@ -42,7 +42,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                 character.TriggerAnimation(sheathMeleeParam);
                 stateMachine.ChangeState(character.standing);
             }
-            else if (swingMelee)
+            else if (swingMelee && stateMachine.CurrentState.GetType() != typeof(AttackingState))
             {
                 stateMachine.ChangeState(character.swingMelee);
             }
