@@ -23,7 +23,7 @@ public class NPCHealthBar : MonoBehaviour
     void Update()
     {
         transform.LookAt(Camera.main.transform);
-        transform.position = npc.position + (Vector3.up * 3);
+        transform.position = npc.position + (Vector3.up * 4f);
 
         bar.fillAmount = npcScript.Health / maxHP;
     }

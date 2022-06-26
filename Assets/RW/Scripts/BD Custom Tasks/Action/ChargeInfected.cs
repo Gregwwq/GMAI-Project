@@ -23,7 +23,7 @@ public class ChargeInfected : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (Vector3.Distance(transform.position, Target.transform.position) <= 2.5f) return TaskStatus.Success;
+        if (Vector3.Distance(transform.position, Target.transform.position) <= 1.5f) return TaskStatus.Success;
 
         Move();
 

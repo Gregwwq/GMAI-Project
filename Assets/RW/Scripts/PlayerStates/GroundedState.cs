@@ -77,7 +77,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                 {
                     if (stateMachine.CurrentState.GetType() == typeof(MeleeDrawnState))
                     {
-                        Debug.Log("W");
                         character.TriggerAnimation(sheathMeleeParam);
                     }
                     stateMachine.ChangeState(character.roll);

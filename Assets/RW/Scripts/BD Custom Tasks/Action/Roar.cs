@@ -17,19 +17,17 @@ public class Roar : Action
     {
         anim = GetComponent<Animator>();
         Target = GameObject.Find("Infected");
-
-        anim.SetFloat("Speed", 0f);
+        
+        anim.SetTrigger(Animator.StringToHash("Shout"));
 
         transform.LookAt(new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z));
-
-        anim.SetTrigger(Animator.StringToHash("Shout"));
 
         elap = 0f;
     }
 
     public override TaskStatus OnUpdate()
     {
-        if (elap > 1.6f) return TaskStatus.Success;
+        if (elap > 2f) return TaskStatus.Success;
         else elap += Time.deltaTime;
 
         return TaskStatus.Running;
