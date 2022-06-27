@@ -281,6 +281,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             roll = new RolLState(this, movementSM);
 
             movementSM.Initialize(standing);
+
+
+            Equip(MeleeWeapon);
+            SheathWeapon();
+            
         }
 
         private void Update()

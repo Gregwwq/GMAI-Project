@@ -22,6 +22,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             sheathMelee = false;
             swingMelee = false;
 
+            character.Equip();
+
             DisplayOnUI(UIManager.Alignment.Left);
         }
 
@@ -40,6 +42,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             if (sheathMelee)
             {
                 character.TriggerAnimation(sheathMeleeParam);
+                character.SheathWeapon();
                 stateMachine.ChangeState(character.standing);
             }
             else if (swingMelee && stateMachine.CurrentState.GetType() != typeof(AttackingState))
