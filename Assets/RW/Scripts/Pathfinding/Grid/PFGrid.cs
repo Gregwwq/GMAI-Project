@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    // this generic class is used for creating a figurative grid of a specified object
     public class PFGrid<T> where T : new()
     {
+        // multi-dimensional array to store the grid
         T[,] gridArr;
 
         public PFGrid(int width, int height)
@@ -21,6 +23,7 @@ namespace Pathfinding
             }
         }
 
+        // function to get the object at the specified coordinate
         public T Get(int x, int y)
         {
             return gridArr[x, y];
